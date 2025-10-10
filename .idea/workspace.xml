@@ -16,7 +16,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce5b39f3-ab3e-4484-b8b8-e29e928d5843" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/crypto++/cryptopp890.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rsa_benchmark.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/rsa_benchmark.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,24 +27,31 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "mujben"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mujben&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/mujben/Kryptografia.git",
-    "accountId": "bf68abf5-9289-47dd-b427-e381bf60f910"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mujben/Kryptografia.git&quot;,
+    &quot;accountId&quot;: &quot;bf68abf5-9289-47dd-b427-e381bf60f910&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="33piEFVK7bHGlx4VqRzYWiLpxL7" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -52,6 +59,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "C/C++ File.dupa.cpp.executor": "Run",
+    "C/C++ File.ec_basic.cpp.executor": "Run",
     "C/C++ File.rsa_benchmark.cpp.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
@@ -70,7 +79,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.folding",
+    "settings.editor.selected.configurable": "CMakeSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -79,13 +88,23 @@
       <recent name="D:\CLionProjects\Kryptografia\crypto++" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="rsa_benchmark.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kryptografia" TARGET_NAME="rsa_benchmark.cpp" CONFIG_NAME="rsa_benchmark.cpp">
-      <option name="sourceFile" value="D:\CLionProjects\Kryptografia\rsa_benchmark.cpp" />
+  <component name="RunManager" selected="C/C++ File.rsa_benchmark.cpp">
+    <configuration name="dupa.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kryptografia" TARGET_NAME="dupa.cpp" CONFIG_NAME="dupa.cpp">
+      <option name="sourceFile" value="D:\CLionProjects\Kryptografia\dupa.cpp" />
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="rsa_benchmark.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" PROGRAM_PARAMS="42069" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kryptografia" TARGET_NAME="rsa_benchmark.cpp" CONFIG_NAME="rsa_benchmark.cpp">
+      <option name="sourceFile" value="rsa_benchmark.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="C/C++ File.rsa_benchmark.cpp" />
+      <item itemvalue="C/C++ File.dupa.cpp" />
+    </list>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -95,6 +114,8 @@
       <option name="presentableId" value="Default" />
       <updated>1760020303205</updated>
       <workItem from="1760020303998" duration="12647000" />
+      <workItem from="1760110294955" duration="1556000" />
+      <workItem from="1760112668646" duration="9458000" />
     </task>
     <servers />
   </component>
