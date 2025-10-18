@@ -1,0 +1,41 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "ConfigTests",
+      "displayName": "Debug Build",
+      "generator": "MinGW Makefiles",
+      "binaryDir": "${sourceDir}/build/debug/tests",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTS": "ON"
+      }
+    },
+    {
+      "name": "ConfigSrc",
+      "displayName": "Debug Build",
+      "generator": "MinGW Makefiles",
+      "binaryDir": "${sourceDir}/build/debug/src",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_SRC": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "BuildTests",
+      "configurePreset": "ConfigTests"
+    },
+    {
+      "name": "BuildSrc",
+      "configurePreset": "ConfigSrc"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "TestAll",
+      "configurePreset": "ConfigTests"
+    }
+  ]
+}

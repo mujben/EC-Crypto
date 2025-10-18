@@ -1,0 +1,1 @@
+add_executable(krypto main.cpp)
