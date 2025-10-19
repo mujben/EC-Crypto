@@ -4,7 +4,7 @@ typedef long long LL;
 
 using namespace std;
 
-tuple<LL, LL, LL> extended_gcd(const LL a, const LL b) {
+inline tuple<LL, LL, LL> extended_gcd(const LL a, const LL b) {
     if (a == 0)
         return {b, 0, 1};
 

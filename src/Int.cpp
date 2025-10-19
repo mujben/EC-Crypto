@@ -46,4 +46,4 @@ public:
     }
 };
 
-long long Int::mod = 13;
+inline long long Int::mod = 13;
