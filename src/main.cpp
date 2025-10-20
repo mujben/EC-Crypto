@@ -1,7 +1,6 @@
 #include <iostream>
 #include "EC.h"
 #include "BruteForceOrder.h"
-
 using namespace std;
 
 int main() {

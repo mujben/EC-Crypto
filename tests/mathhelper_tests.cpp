@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/MathHelper.cpp"
+#include "../src/MathHelper.h"
 
 TEST(extended_gcd_tests, base_case) {
     auto [g, x, y] = extended_gcd(0, 6);
