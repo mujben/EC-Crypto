@@ -1,9 +1,6 @@
-#pragma once
-#include <iostream>
-#include <random>
-#include "MathHelper.cpp"
-#include "Int.cpp"
-#include "EC.cpp"
+#include "MathHelper.h"
+#include "Int.h"
+#include "EC.h"
 
 struct Point {
     Int x;

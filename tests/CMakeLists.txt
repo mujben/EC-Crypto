@@ -12,7 +12,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(all_tests test.cpp point_tests.cpp mathhelper_tests.cpp int_tests.cpp EC_tests.cpp)
-target_link_libraries(all_tests gtest_main)
+target_link_libraries(all_tests gtest_main krypto_lib)
 
 include(GoogleTest)
 gtest_discover_tests(all_tests)
