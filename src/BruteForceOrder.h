@@ -2,8 +2,8 @@
 #define KRYPTO_BRUTEFORCEORDER_H
 #include "EC.h"
 
-int IsResidue(Int a);
+int is_residue(Int a);
 
-LL FindOrder(const EC &curve);
+LL find_order(const EC &curve);
 
 #endif //KRYPTO_BRUTEFORCEORDER_H

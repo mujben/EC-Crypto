@@ -19,6 +19,6 @@ TEST_F(CurveMod137Test, brute_force_order) {
     Int::set_mod(137);
     curve.a = 54;
     curve.b = 85;
-    LL order = FindOrder(curve);
+    LL order = find_order(curve);
     ASSERT_EQ(order, LL(144));
 }

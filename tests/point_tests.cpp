@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/Point.cpp"
+#include "Point.h"
 
 TEST(point_add_tests, lhs_is_inf) {
     EC curve;

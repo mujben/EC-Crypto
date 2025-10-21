@@ -1,7 +1,7 @@
 #include "Int.h"
 #include "EC.h"
 
-int IsResidue(Int a) {
+int is_residue(Int a) {
     if (a == Int(0)) return 0;
 
     const LL modulo = Int::get_mod();
@@ -16,7 +16,7 @@ int IsResidue(Int a) {
     return 0;
 }
 
-LL FindOrder(const EC &curve) {
+LL find_order(const EC &curve) {
     /*
         *---------------------------------------------------------------------------*
         *   This function is able to calculate order of an Elliptic curve group     *
@@ -29,7 +29,7 @@ LL FindOrder(const EC &curve) {
     const LL mod = Int::get_mod();
     for (LL x = 0; x < mod; x++) {
         Int res_y = Int(x).pow(3) + curve.a * Int(x) + curve.b;
-        int status = IsResidue(res_y);
+        int status = is_residue(res_y);
         if (status == 1) order += 2;
         else if (status == 0) order += 1;
     }

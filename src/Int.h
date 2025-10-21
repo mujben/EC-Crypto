@@ -1,6 +1,5 @@
 #ifndef KRYPTO_INT_H
 #define KRYPTO_INT_H
-#include "MathHelper.h"
 typedef long long LL;
 
 struct Int {
@@ -17,7 +16,7 @@ public:
         return value;
     };
 
-    static void set_mod(const LL modulo);
+    static void set_mod(LL modulo);
 
     static LL get_mod();
 

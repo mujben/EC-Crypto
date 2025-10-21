@@ -1,6 +1,5 @@
 #include "MathHelper.h"
 #include "Int.h"
-typedef long long LL;
 
 LL Int::mod = 13;
 

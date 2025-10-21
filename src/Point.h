@@ -1,4 +1,5 @@
-#include "MathHelper.h"
+#ifndef KRYPTO_POINT_H
+#define KRYPTO_POINT_H
 #include "Int.h"
 #include "EC.h"
 
@@ -7,41 +8,40 @@ struct Point {
     Int y;
     bool inf;
 
-    EC& curve;
+    const EC& curve;
 };
 
-bool operator==(const Point& lhs, const Point& rhs) {
+inline bool operator==(const Point& lhs, const Point& rhs) {
     return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.inf == rhs.inf && lhs.curve == rhs.curve);
 }
 
-Point operator+(const Point& lhs, const Point& rhs) {
+inline Point operator+(const Point& lhs, const Point& rhs) {
     if (lhs.curve != rhs.curve) throw;
-    EC& curve = lhs.curve;
 
     if (lhs.inf == true) return rhs;
     if (rhs.inf == true) return lhs;
 
     if (lhs.x == rhs.x && lhs.y + rhs.y == Int(0))
-        return {0, 0, true, curve};
+        return {0, 0, true, lhs.curve};
 
     Int alpha;
     if (lhs == rhs)
-        alpha = (rhs.y - lhs.y) / (rhs.x - lhs.x);
+        alpha = (Int(3) * lhs.x * lhs.x + lhs.curve.a) / (Int(2) * lhs.y);
     else
-        alpha = (Int(3) * lhs.x * lhs.x + curve.a) / (Int(2) * lhs.y);
+        alpha = (rhs.y - lhs.y) / (rhs.x - lhs.x);
 
     Int res_x = alpha * alpha - lhs.x - rhs.x;
-    return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, curve};
+    return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, lhs.curve};
 }
 
-void operator+=(Point& lhs, const Point& rhs) {
+inline void operator+=(Point& lhs, const Point& rhs) {
     Point res = lhs + rhs;
     lhs.x = res.x;
     lhs.y = res.y;
     lhs.inf = res.inf;
 }
 
-Point operator*(const LL& scalar, const Point& point) {
+inline Point operator*(const LL& scalar, const Point& point) {
     if (point.inf == true) return {0, 0, true, point.curve};
 
     Point res = {0, 0, true, point.curve}, current = point;
@@ -57,3 +57,5 @@ Point operator*(const LL& scalar, const Point& point) {
 
     return res;
 }
+
+#endif //KRYPTO_POINT_H
