@@ -1,21 +1,10 @@
-#ifndef KRYPTO_POINT_H
-#define KRYPTO_POINT_H
-#include "Int.h"
-#include "EC.h"
+#include "Point.h"
 
-struct Point {
-    Int x;
-    Int y;
-    bool inf;
-
-    const EC& curve;
-};
-
-inline bool operator==(const Point& lhs, const Point& rhs) {
+bool operator==(const Point& lhs, const Point& rhs) {
     return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.inf == rhs.inf && lhs.curve == rhs.curve);
 }
 
-inline Point operator+(const Point& lhs, const Point& rhs) {
+Point operator+(const Point& lhs, const Point& rhs) {
     if (lhs.curve != rhs.curve) throw;
 
     if (lhs.inf == true) return rhs;
@@ -34,14 +23,14 @@ inline Point operator+(const Point& lhs, const Point& rhs) {
     return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, lhs.curve};
 }
 
-inline void operator+=(Point& lhs, const Point& rhs) {
+void operator+=(Point& lhs, const Point& rhs) {
     Point res = lhs + rhs;
     lhs.x = res.x;
     lhs.y = res.y;
     lhs.inf = res.inf;
 }
 
-inline Point operator*(const LL& scalar, const Point& point) {
+Point operator*(const LL& scalar, const Point& point) {
     if (point.inf == true) return {0, 0, true, point.curve};
 
     Point res = {0, 0, true, point.curve}, current = point;
@@ -57,5 +46,3 @@ inline Point operator*(const LL& scalar, const Point& point) {
 
     return res;
 }
-
-#endif //KRYPTO_POINT_H

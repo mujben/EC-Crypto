@@ -1,6 +1,7 @@
 #include <iostream>
 #include "EC.h"
-#include "BruteForceOrder.h"
+#include "ECHelper.h"
+#include "Int.h"
 using namespace std;
 
 int main() {

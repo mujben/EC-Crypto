@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <vector>
-#include "SubgroupGenerator.h"
+#include "ECHelper.h"
 #include "Point.h"
 
 TEST(finding_square_root, test0) {

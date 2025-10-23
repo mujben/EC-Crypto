@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "BruteForceOrder.h"
+#include "ECHelper.h"
 
 class CurveMod137Test : public ::testing::Test {
 protected:

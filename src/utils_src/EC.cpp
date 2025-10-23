@@ -15,4 +15,18 @@ EC::EC(const LL modulo) {
     } while (delta == Int(0));
 }
 
-EC::EC() : EC(65537) {};
+EC::EC() : EC(65537) {}
+
+bool operator==(const EC& lhs, const EC& rhs) {
+    return lhs.a == rhs.a && lhs.b == rhs.b;
+}
+
+bool operator!=(const EC& lhs, const EC& rhs) {
+    return !(lhs == rhs);
+}
+
+std::ostream& operator<<(std::ostream& os, const EC& curve) {
+    os << "----- Curve -----\n";
+    os << "a: " << curve.a << ", b: " << curve.b << "\n";
+    return os;
+}
