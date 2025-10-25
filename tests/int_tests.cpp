@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/Int.cpp"
+#include "Int.h"
 
 TEST(int_add_test, equal_mod) {
     Int::set_mod(13);
@@ -19,7 +19,7 @@ TEST(int_cast_test, cast_to_ll) {
     ASSERT_EQ(val, 2);
 }
 
-TEST(int_set_mod_test, mod_cahnges) {
+TEST(int_set_mod_test, mod_changes) {
     Int::set_mod(100);
     ASSERT_EQ(int(Int(50) + Int(60)), 10);
 

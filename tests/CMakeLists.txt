@@ -11,8 +11,10 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(all_tests test.cpp point_tests.cpp mathhelper_tests.cpp int_tests.cpp EC_tests.cpp)
-target_link_libraries(all_tests gtest_main)
+AUX_SOURCE_DIRECTORY("${CMAKE_CURRENT_LIST_DIR}" TEST_SRC)
+
+add_executable(all_tests ${TEST_SRC})
+target_link_libraries(all_tests gtest_main krypto_lib)
 
 include(GoogleTest)
 gtest_discover_tests(all_tests)

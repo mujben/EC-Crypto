@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/EC.cpp"
+#include "EC.h"
 
 
 TEST(ec_equality_tests, are_equal) {
