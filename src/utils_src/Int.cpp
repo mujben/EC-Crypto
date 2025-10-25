@@ -10,7 +10,9 @@ Int Int::inverse() const {
 }
 
 Int::Int() : value(0) {}
-Int::Int(LL val) : value(val % mod) {}
+Int::Int(LL value) {
+    this->value = (value % mod + mod) % mod;
+}
 
 Int::operator LL() const {
     return value;

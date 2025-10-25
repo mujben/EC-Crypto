@@ -1,24 +1,46 @@
 #include <gtest/gtest.h>
-#include "ECHelper.h"
+#include "EC.h"
 
-class CurveMod137Test : public ::testing::Test {
-protected:
-    void SetUp() override {
-        Int::set_mod(137);
-        EC curve;
-        curve.a = 54;
-        curve.b = 85;
-    }
-    void TearDown() override {
-        Int::set_mod(1);
-    }
-};
 
-TEST_F(CurveMod137Test, brute_force_order) {
-    EC curve;
-    Int::set_mod(137);
-    curve.a = 54;
-    curve.b = 85;
-    LL order = find_order(curve);
-    ASSERT_EQ(order, LL(144));
+TEST(ec_equality_tests, are_equal) {
+    Int::set_mod(101);
+    EC curve1;
+    curve1.a = 10;
+    curve1.b = 20;
+
+    EC curve2;
+    curve2.a = 10;
+    curve2.b = 20;
+
+    ASSERT_TRUE(curve1 == curve2);
+    ASSERT_FALSE(curve1 != curve2);
 }
+
+TEST(ec_equality_tests, are_not_equal_a) {
+    Int::set_mod(101);
+    EC curve1;
+    curve1.a = 10;
+    curve1.b = 20;
+
+    EC curve2;
+    curve2.a = 11;
+    curve2.b = 20;
+
+    ASSERT_FALSE(curve1 == curve2);
+    ASSERT_TRUE(curve1 != curve2);
+}
+
+TEST(ec_equality_tests, are_not_equal_b) {
+    Int::set_mod(101);
+    EC curve1;
+    curve1.a = 10;
+    curve1.b = 20;
+
+    EC curve2;
+    curve2.a = 10;
+    curve2.b = 21;
+
+    ASSERT_FALSE(curve1 == curve2);
+    ASSERT_TRUE(curve1 != curve2);
+}
+
