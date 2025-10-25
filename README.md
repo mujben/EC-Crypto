@@ -1,4 +1,4 @@
-# Kryptografia - repository for cryptography project
+# Implementation of EC Cryptography
 This repository focuses on implementing the **Elliptic Curve Cryptography (ECC)** algorithm in C++, along with its common applications such as **ECDH (Elliptic Curve Diffie–Hellman)** and **ECDSA (Elliptic Curve Digital Signature Algorithm)**.
 
 This project aims to:
