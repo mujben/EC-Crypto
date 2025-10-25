@@ -56,7 +56,7 @@ bool is_prime(LL n, int iterations) {
     return true;
 }
 
-array<LL, 2> factor(const LL ord) {
+array<LL, 2> factor(const LL ord, int MAX_COFACTOR) {
     array<LL, 5> primes = {2, 3, 5, 7, 11};
     LL n = ord;
     LL h = 1;
@@ -66,8 +66,22 @@ array<LL, 2> factor(const LL ord) {
             h *= prime;
         }
     }
-    if (h > 11) return {0, 0};
+    if (h > MAX_COFACTOR) return {0, 0};
     if (is_prime(n)) return {h, n};
     return {0, 0};
 }
 
+int is_residue(Int a) {
+    if (a == Int(0)) return 0;
+
+    const LL modulo = Int::get_mod();
+    LL exponent = (modulo - 1) / 2;
+    Int result = a.pow(exponent);
+    if (result == Int(1)) {
+        return 1;
+    }
+    if (result == Int(modulo - 1) || result == Int(-1)) {
+        return -1;
+    }
+    return 0;
+}
