@@ -11,12 +11,12 @@ private:
     Int inverse() const {
         auto [g, x, y] = extended_gcd(this->value, mod);
         if (g != 1) return 0;
-        return x % mod;
+        return Int((x % mod + mod) % mod);
     }
 
 public:
     Int() {}
-    Int(LL value) : value(value % mod) {}
+    Int(LL value) : value((value % mod + mod) % mod) {}
     operator LL() const {
         return value;
     }
@@ -38,7 +38,8 @@ public:
     }
 
     Int operator/(const Int& rhs) const {
-        return this->value * rhs.inverse().value % mod;
+        LL res = this->value * rhs.inverse().value;
+        return Int((res % mod + mod) % mod);
     }
 
     bool operator==(const Int& rhs) const {

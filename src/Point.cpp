@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <random>
+#include <stdexcept>
 #include "MathHelper.cpp"
 #include "Int.cpp"
 #include "EC.cpp"
@@ -18,7 +19,7 @@ bool operator==(const Point& lhs, const Point& rhs) {
 }
 
 Point operator+(const Point& lhs, const Point& rhs) {
-    if (lhs.curve != rhs.curve) throw;
+    if (lhs.curve != rhs.curve) throw std::runtime_error("Curve mismatch");;
     EC& curve = lhs.curve;
 
     if (lhs.inf == true) return rhs;
@@ -29,9 +30,9 @@ Point operator+(const Point& lhs, const Point& rhs) {
 
     Int alpha;
     if (lhs == rhs)
-        alpha = (rhs.y - lhs.y) / (rhs.x - lhs.x);
-    else
         alpha = (Int(3) * lhs.x * lhs.x + curve.a) / (Int(2) * lhs.y);
+    else
+        alpha = (rhs.y - lhs.y) / (rhs.x - lhs.x);
 
     Int res_x = alpha * alpha - lhs.x - rhs.x;
     return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, curve};
