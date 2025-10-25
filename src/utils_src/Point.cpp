@@ -1,26 +1,38 @@
-#include "Point.h"
+#include <iostream>
+#include <stdexcept>
+#include "Int.h"
+#include "EC.h"
+
+struct Point {
+    Int x;
+    Int y;
+    bool inf;
+
+    EC& curve;
+};
 
 bool operator==(const Point& lhs, const Point& rhs) {
     return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.inf == rhs.inf && lhs.curve == rhs.curve);
 }
 
 Point operator+(const Point& lhs, const Point& rhs) {
-    if (lhs.curve != rhs.curve) throw;
+    if (lhs.curve != rhs.curve) throw std::runtime_error("Curve mismatch");;
+    EC& curve = lhs.curve;
 
     if (lhs.inf == true) return rhs;
     if (rhs.inf == true) return lhs;
 
     if (lhs.x == rhs.x && lhs.y + rhs.y == Int(0))
-        return {0, 0, true, lhs.curve};
+        return {0, 0, true, curve};
 
     Int alpha;
     if (lhs == rhs)
-        alpha = (Int(3) * lhs.x * lhs.x + lhs.curve.a) / (Int(2) * lhs.y);
+        alpha = (Int(3) * lhs.x * lhs.x + curve.a) / (Int(2) * lhs.y);
     else
         alpha = (rhs.y - lhs.y) / (rhs.x - lhs.x);
 
     Int res_x = alpha * alpha - lhs.x - rhs.x;
-    return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, lhs.curve};
+    return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, curve};
 }
 
 void operator+=(Point& lhs, const Point& rhs) {
