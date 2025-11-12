@@ -77,3 +77,10 @@ TEST(int_equality_test, are_not_equal) {
     Int::set_mod(13);
     ASSERT_FALSE(Int(15) == Int(3));
 }
+
+TEST(int_exponentiation_test, are_equal) {
+    Int::set_mod(13);
+    Int a = Int(4);
+    LL exp = -2;
+    ASSERT_EQ(LL(a.pow(exp)), 9);
+}
