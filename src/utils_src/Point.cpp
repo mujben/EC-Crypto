@@ -1,23 +1,17 @@
-#include <iostream>
+#include <array>
 #include <stdexcept>
 #include "Int.h"
 #include "EC.h"
-
-struct Point {
-    Int x;
-    Int y;
-    bool inf;
-
-    EC& curve;
-};
+#include "Point.h"
+#include "ECHelper.h"
 
 bool operator==(const Point& lhs, const Point& rhs) {
     return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.inf == rhs.inf && lhs.curve == rhs.curve);
 }
 
 Point operator+(const Point& lhs, const Point& rhs) {
-    if (lhs.curve != rhs.curve) throw std::runtime_error("Curve mismatch");;
-    EC& curve = lhs.curve;
+    if (lhs.curve != rhs.curve) throw std::runtime_error("Curve mismatch");
+    const EC& curve = lhs.curve;
 
     if (lhs.inf == true) return rhs;
     if (rhs.inf == true) return lhs;
@@ -57,4 +51,13 @@ Point operator*(const LL& scalar, const Point& point) {
     }
 
     return res;
+}
+
+Point find_generator(const EC &curve, const std::array<LL, 2> &order) {
+    const LL h = order[0];
+    while (true){
+        Point P = pick_random_point(curve);
+        Point G = h * P;
+        if (G.inf == false) return G;
+    }
 }
