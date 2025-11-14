@@ -3,9 +3,10 @@
 
 LL find_order(const EC &curve) {
     LL order = 1;
-    const LL mod = Int::get_mod();
-    for (LL x = 0; x < mod; x++) {
-        Int res_y = Int(x).pow(3) + curve.a * Int(x) + curve.b;
+    const LL p = curve.p;
+    for (LL x = 0; x < p; x++) {
+        Int x_int(x, p);
+        Int res_y = x_int.pow(3) + curve.a * x_int + curve.b;
         int status = is_residue(res_y);
         if (status == 1) order += 2;
         else if (status == 0) order += 1;
@@ -14,14 +15,14 @@ LL find_order(const EC &curve) {
 }
 
 Int find_root_mod(const Int value) {
-    const LL mod = Int::get_mod();
-    if (value == Int(0)) return 0;
-    if (value.pow(LL(mod - 1) / 2) != Int(1)) return -1;
+    const LL mod = value.get_mod();
+    if (value == 0) return Int(0, mod);
+    if (value.pow(LL(mod - 1) / 2) != 1) return Int(-1, mod);
 
-    Int z;
+    Int z(0, mod);
     do {
-        z = random_LL(1, mod - 1);
-    } while (z.pow(LL(mod - 1) / 2) != Int(mod - 1));
+        z = Int(random_LL(1, mod - 1), mod);
+    } while (z.pow(LL(mod - 1) / 2) != (mod - 1));
 
     LL Q = mod - 1;
     LL s = 0;
@@ -34,13 +35,13 @@ Int find_root_mod(const Int value) {
     Int c = z.pow(Q);
     Int t = value.pow(Q);
     Int R = value.pow(LL(Q + 1) / 2);
-    while (t != Int(1)) {
+    while (t != 1) {
         LL i = 1;
         Int t_temp = t;
         while (i <= M) {
             t_temp = t_temp * t_temp;
-            if (i == M) return -1;
-            if (t_temp == Int(1)) break;
+            if (i == M) return Int(-1, mod);
+            if (t_temp == 1) break;
             i++;
         }
         Int b = c;
@@ -58,13 +59,13 @@ Int find_root_mod(const Int value) {
 }
 
 Point pick_random_point(const EC &curve) {
-    const LL mod = Int::get_mod();
+    const LL mod = curve.p;
     LL value = mod % 4;
     while (true) {
-        Int x(random_LL(0, mod - 1));
+        Int x(random_LL(0, mod - 1), mod);
         Int y_sq = x.pow(3) + curve.a * x + curve.b;
         Int euler_cryterium = y_sq.pow(LL((mod - 1) / 2));
-        if (euler_cryterium == Int(1)) {
+        if (euler_cryterium == 1) {
             if (value == 3) {
                 Int y = y_sq.pow(LL((mod + 1) / 4));
                 return {x, y, false, curve};
@@ -74,8 +75,8 @@ Point pick_random_point(const EC &curve) {
                 return {x, y, false, curve};
             }
         }
-        else if (euler_cryterium == Int(0)) {
-            return {x, 0, false, curve};
+        else if (euler_cryterium == 0) {
+            return {x, Int(0, mod), false, curve};
         }
     }
 }

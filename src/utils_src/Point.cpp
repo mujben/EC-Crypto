@@ -16,17 +16,19 @@ Point operator+(const Point& lhs, const Point& rhs) {
     if (lhs.inf == true) return rhs;
     if (rhs.inf == true) return lhs;
 
-    if (lhs.x == rhs.x && lhs.y + rhs.y == Int(0))
-        return {0, 0, true, curve};
+    const LL p = lhs.curve.p;
+
+    if (lhs.x == rhs.x && lhs.y + rhs.y == Int(0, p))
+        return {lhs.curve};
 
     Int alpha;
     if (lhs == rhs)
-        alpha = (Int(3) * lhs.x * lhs.x + curve.a) / (Int(2) * lhs.y);
+        alpha = (Int(3, p) * lhs.x * lhs.x + lhs.curve.a) / (Int(2, p) * lhs.y);
     else
         alpha = (rhs.y - lhs.y) / (rhs.x - lhs.x);
 
     Int res_x = alpha * alpha - lhs.x - rhs.x;
-    return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, curve};
+    return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, lhs.curve};
 }
 
 void operator+=(Point& lhs, const Point& rhs) {
@@ -35,19 +37,32 @@ void operator+=(Point& lhs, const Point& rhs) {
     lhs.y = res.y;
     lhs.inf = res.inf;
 }
+Point Point::operator-() const {
+    return {this->x, -this->y, this->inf, this->curve};
+}
 
 Point operator*(const LL& scalar, const Point& point) {
-    if (point.inf == true) return {0, 0, true, point.curve};
 
-    Point res = {0, 0, true, point.curve}, current = point;
+    if (point.inf == true) {
+        return Point(point.curve);
+    }
+
     LL k = scalar;
+    Point current = point;
+
+    if (k < 0) {
+        current = -current;
+        k = -k;
+    }
+
+    Point res(point.curve);
 
     while (k > 0) {
-        if (k & 1)
-            res += current;
-
-        current += current;
-        k = k >> 1;
+        if (k & 1) { // if (k is odd)
+            res += current; // add
+        }
+        current += current; // double
+        k = k >> 1;         // k = k / 2
     }
 
     return res;

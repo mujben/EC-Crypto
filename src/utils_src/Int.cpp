@@ -1,63 +1,53 @@
 #include "MathHelper.h"
 #include "Int.h"
+#include <tuple>
 
-LL Int::mod = 1;
-
-Int Int::inverse() const {
-    auto [g, x, y] = extended_gcd(this->value, mod);
-    if (g != 1) return 0;
-    return (x % mod + mod) % mod;
+std::tuple<LL, LL, LL> extended_gcd(const LL a, const LL b) {
+    if (a == 0)
+        return {b, 0, 1};
+    auto [g, x1, y1] = extended_gcd(b % a, a);
+    return {g, y1 - (b / a) * x1, x1};
 }
 
-Int::Int() : value(0) {}
-Int::Int(LL value) {
-    this->value = (value % mod + mod) % mod;
+Int::Int() : value(0), mod(1) {};
+
+Int::Int(LL val, LL modulo) {
+    if (modulo <= 0) {
+        if (modulo == 0) throw std::runtime_error("Modulus cannot be 0");
+        this->mod = modulo;
+    } else {
+        this->mod = modulo;
+    }
+    this->value = (val % mod + mod) % mod;
+}
+
+Int Int::inverse() const {
+    if (mod == 1) return Int(0, 1);
+    auto [g, x, y] = extended_gcd(this->value, this->mod);
+    if (g != 1) {
+        throw std::runtime_error("Modular inverse does not exist");
+    }
+    return Int((x % mod + mod) % mod, this->mod);
 }
 
 Int::operator LL() const {
     return value;
 }
 
-Int Int::operator+(const Int& rhs) const {
-    return (this->value + rhs.value) % mod;
-}
-
-Int Int::operator-(const Int& rhs) const {
-    return (this->value - rhs.value + mod) % mod;
-}
-
-Int Int::operator*(const Int& rhs) const {
-    return (this->value * rhs.value) % mod;
-}
-
-void Int::operator*=(const Int& rhs) {
-    this->value = (*this * rhs).value;
-}
-
-Int Int::operator/(const Int& rhs) const {
-    return this->value * rhs.inverse().value % mod;
-}
-
-bool Int::operator==(const Int& rhs) const {
-    return this->value == rhs.value;
-}
-
-void Int::set_mod(const LL modulo) {
-    mod = modulo;
-}
-
-LL Int::get_mod() {
+LL Int::get_mod() const {
     return mod;
 }
 
 Int Int::pow(LL exp) const {
-    if (exp == 0) return Int(1);
-    Int result = Int(1);
+    if (this->mod == 1) return Int(0, 1);
+    Int result(1, this->mod);
     Int base = *this;
+
     if (exp < 0) {
         base = base.inverse();
         exp = -exp;
     }
+
     while (exp > 0) {
         if (exp & 1) result *= base;
         base *= base;
@@ -65,3 +55,59 @@ Int Int::pow(LL exp) const {
     }
     return result;
 }
+
+Int Int::operator-() const {
+    return Int(-this->value, this->mod);
+}
+
+#define MOD_CHECK(op) if (this->mod != rhs.mod) \
+{ throw std::runtime_error("Modulus mismatch in Int::operator" #op); }
+
+Int Int::operator+(const Int& rhs) const {
+    MOD_CHECK(+);
+    return Int(this->value + rhs.value, this->mod);
+}
+
+Int Int::operator-(const Int& rhs) const {
+    MOD_CHECK(-);
+    return Int(this->value - rhs.value + mod, this->mod);
+}
+
+Int Int::operator*(const Int& rhs) const {
+    MOD_CHECK(*);
+    return Int(this->value * rhs.value, this->mod);
+}
+
+Int Int::operator/(const Int& rhs) const {
+    MOD_CHECK(/);
+    return (*this) * rhs.inverse();
+}
+
+void Int::operator+=(const Int& rhs) {
+    MOD_CHECK(+=);
+    this->value = (*this + rhs).value;
+}
+
+void Int::operator-=(const Int& rhs) {
+    MOD_CHECK(-=);
+    this->value = (*this - rhs).value;
+}
+
+void Int::operator*=(const Int& rhs) {
+    MOD_CHECK(*=);
+    this->value = (*this * rhs).value;
+}
+
+void Int::operator/=(const Int& rhs) {
+    MOD_CHECK(/=);
+    this->value = (*this / rhs).value;
+}
+
+bool Int::operator==(const Int& rhs) const {
+    return this->value == rhs.value && this->mod == rhs.mod;
+}
+
+bool Int::operator!=(const Int& rhs) const {
+    return !(*this == rhs);
+}
+

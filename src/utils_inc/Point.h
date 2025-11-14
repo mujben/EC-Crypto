@@ -10,8 +10,8 @@ struct Point {
 
     const EC& curve;
 
+    Point(const EC& curve) : x((0), curve.p), y((0), curve.p), inf(true), curve(curve) {};
     Point(Int x, Int y, bool inf, const EC& curve) : x(x), y(y), inf(inf), curve(curve) {};
-    Point(const EC& curve) : x(0), y(0), inf(true), curve(curve) {};
 
     Point& operator=(const Point& rhs) {
         if (this == &rhs) return *this;
@@ -21,6 +21,8 @@ struct Point {
         this->inf = rhs.inf;
         return *this;
     }
+
+    Point operator-() const;
 };
 
 bool operator==(const Point& lhs, const Point& rhs);

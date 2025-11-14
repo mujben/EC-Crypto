@@ -6,6 +6,9 @@
 #include "Int.h"
 #include "Point.h"
 #include "MathHelper.h"
+#include "ECDH.h"
+#include "ECDSA.h"
+
 using namespace std;
 
 int main() {
@@ -34,5 +37,51 @@ int main() {
     cout << "Time taken to choose a good curve: " << chrono::duration_cast<chrono::milliseconds>(curve_end - curve_begin).count() << " milliseconds " << "(in " << tries << " tries)\n";
     cout << "Generator point chosen: (" << g.x << ", " << g.y << ")\n";
     cout << "Time taken to choose generator: " << chrono::duration_cast<chrono::microseconds>(generator_end - generator_begin).count() << " microseconds\n";
+
+
+    LL n = factored[1];
+
+    cout << "\n--- ECDH protocol ---\n";
+    ECDH Alice(curve, g, n);
+    Point QA = Alice.get_public_key();
+    cout << "Alice's public key (QA): (" << QA.x << ", " << QA.y << ")\n";
+
+    ECDH Bob(curve, g, n);
+    Point QB = Bob.get_public_key();
+    cout << "Bob's public key (QB): (" << QB.x << ", " << QB.y << ")\n";
+
+    Point shared_A = Alice.calculate_shared_secret(QB);
+    Point shared_B = Bob.calculate_shared_secret(QA);
+
+    cout << "\n--- Shared secret calculation ---\n";
+    cout << "Alice's calculated secret: (" << shared_A.x << ", " << shared_A.y << ")\n";
+    cout << "Bob's calulated secret: (" << shared_B.x << ", " << shared_B.y << ")\n";
+
+    if (shared_A == shared_B && !shared_A.inf) {
+        cout << "\nSuccess: Shared secrets match. \n";
+    } else {
+        cout << "\nShared secrets do not match OR are point at infinity. \n";
+    }
+
+    cout << "\n--- ECDSA protocol ---\n";
+
+    ECDSA alice(curve, g, n);
+    Point Qa = alice.get_public_key();
+    cout << "Alice's Public Key (QA): (" << Qa.x << ", " << Qa.y << ")\n";
+
+    string message = "Wiadomosc do podpisania";
+    cout << "Message: \"" << message << "\"\n";
+
+    Signature sig = alice.sign(message);
+    cout << "Signature (r, s): (" << sig.r << "," << sig.s << ")\n";
+
+    bool is_valid = ECDSA::verify(message, sig, Qa, curve, g, n);
+
+    if (is_valid) {
+        cout << "\nSuccess: Signature valid. \n";
+    } else {
+        cout << "\nFailure: Signature is not valid. \n";
+    }
+
     return 0;
 }
