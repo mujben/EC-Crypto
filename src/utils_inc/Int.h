@@ -6,9 +6,11 @@ struct Int {
 private:
     LL value;
     static LL mod;
-    Int inverse() const;
+
 
 public:
+    Int inverse() const;
+
     Int();
     Int(LL val);
 
