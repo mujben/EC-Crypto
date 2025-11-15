@@ -7,16 +7,20 @@ struct Point {
     Int x;
     Int y;
     bool inf;
-
     const EC& curve;
+
+    Point(const EC& curve);
+    Point(Int x, Int y, bool inf, const EC& curve);
+
+    Point& operator=(const Point& rhs);
+    Point operator-() const;
+    Point operator+(const Point& rhs);
+    void operator+=(const Point& rhs);
+    bool operator==(const Point& rhs);
+    bool operator!=(const Point& rhs);
 };
 
-bool operator==(const Point& lhs, const Point& rhs);
-
-Point operator+(const Point& lhs, const Point& rhs);
-
-void operator+=(Point& lhs, const Point& rhs);
-
 Point operator*(const LL& scalar, const Point& point);
+Point find_generator(const EC &curve, const array<LL, 2>& order);
 
 #endif //KRYPTO_POINT_H

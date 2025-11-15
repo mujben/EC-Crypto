@@ -30,29 +30,27 @@ TEST(extended_gcd_tests, standard_case) {
 }
 
 class is_residue_tests : public ::testing::Test {
-    protected:
+protected:
+    LL p;
     void SetUp() override {
-        Int::set_mod(13);
-    }
-    void TearDown() override {
-        Int::set_mod(1);
+        p = 13;
     }
 };
 
 TEST_F(is_residue_tests, base_case) {
-    Int n(0);
+    Int n(0, p);
     int result_n = 0;
     ASSERT_EQ(is_residue(n), result_n);
 }
 
 TEST_F(is_residue_tests, true_case) {
-    Int a(1);
+    Int a(1, p);
     int result_a = 1;
     ASSERT_EQ(is_residue(a), result_a);
 }
 
 TEST_F(is_residue_tests, false_case) {
-    Int b(2);
+    Int b(2, p);
     int result_b = -1;
     ASSERT_EQ(is_residue(b), result_b);
 }

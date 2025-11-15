@@ -8,31 +8,33 @@
 using namespace std;
 
 TEST(finding_square_root, test0) {
-    Int::set_mod(13);
-    Int root = find_root_mod(3);
-    EXPECT_TRUE(root == Int(4) || root == Int(9));
+    LL p = 13;
+    Int val(3, p);
+    Int root = find_root_mod(val);
+    EXPECT_TRUE(root == Int(4, p) || root == Int(9, p));
 }
 
 class curve_points_tests : public testing::Test {
 protected:
-    void SetUp() override {
-        Int::set_mod(7);
-        curve.a = 1;
-        curve.b = 0;
-        points = vector<Point>{
-        {0, 0, true, curve},
-        {0, 0, false, curve},
-        {1, 3, false, curve},
-        {1, 4, false, curve},
-        {3, 3, false, curve},
-        {3, 4, false, curve},
-        {5, 2, false, curve},
-        {5, 5, false, curve}
-        };
-    }
-
+    LL p;
     EC curve;
     vector<Point> points;
+    void SetUp() override {
+        p = 7;
+
+        curve = EC(1, 0, p);
+
+        points = vector<Point> {
+            curve,
+            {{0, p}, {0, p}, false, curve},
+            {{1, p}, {3, p}, false, curve},
+            {{1, p}, {4, p}, false, curve},
+            {{3, p}, {3, p}, false, curve},
+            {{3, p}, {4, p}, false, curve},
+            {{5, p}, {2, p}, false, curve},
+            {{5, p}, {5, p}, false, curve}
+        };
+    }
 };
 
 TEST_F(curve_points_tests, random_point_is_valid) {

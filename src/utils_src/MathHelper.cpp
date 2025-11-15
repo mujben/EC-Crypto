@@ -5,14 +5,6 @@
 
 using namespace std;
 
-tuple<LL, LL, LL> extended_gcd(const LL a, const LL b) {
-    if (a == 0)
-        return {b, 0, 1};
-
-    auto [g, x1, y1] = extended_gcd(b % a, a);
-    return {g, y1 - (b / a) * x1, x1};
-}
-
 LL random_LL(const LL min, const LL max) {
     random_device rd;
     mt19937 gen(rd());
@@ -32,27 +24,22 @@ bool is_prime(LL n, int iterations) {
         s++;
     }
 
-    LL old_mod = Int::get_mod();
-
     for (int i = 0; i < iterations; i++) {
-        Int::set_mod(n);
-        Int a(random_LL(1, n - 1));
+        Int a(random_LL(1, n - 1), n);
         Int x = a.pow(d);
-        if (x == Int(1) || x == Int(n - 1)) continue;
+        if (x == 1 || x == (n - 1)) continue;
         bool composite = true;
         for (int r = 0; r < s - 1; r++) {
             x *= x;
-            if (x == Int(n - 1)) {
+            if (x == n - 1) {
                 composite = false;
                 break;
             }
         }
         if (composite) {
-            Int::set_mod(old_mod);
             return false;
         }
     }
-    Int::set_mod(old_mod);
     return true;
 }
 
@@ -72,15 +59,15 @@ array<LL, 2> factor(const LL ord, int MAX_COFACTOR) {
 }
 
 int is_residue(Int a) {
-    if (a == Int(0)) return 0;
+    if (a == 0) return 0;
 
-    const LL modulo = Int::get_mod();
+    const LL modulo = a.get_mod();
     LL exponent = (modulo - 1) / 2;
     Int result = a.pow(exponent);
-    if (result == Int(1)) {
+    if (result == 1) {
         return 1;
     }
-    if (result == Int(modulo - 1) || result == Int(-1)) {
+    if (result == modulo - 1) {
         return -1;
     }
     return 0;

@@ -28,6 +28,12 @@ Adding two points of a elliptic curve according to standard formulas.
 
 We used double and add algorithm for faster computations.
 
+- **find_generator(curve, {h, n})**
+
+Return generator point `G`. This is achieved by selecting random point `P` and calculating `G = h * P` 
+(h is the cofactor of a curve). This operation guarantees that `G` is a generator of the subgroup
+of order `n` according to [Lagrange's theorem](https://en.wikipedia.org/wiki/Lagrange%27s_theorem_(group_theory)).
+
 ## Int
 
 - **pow(exp)**

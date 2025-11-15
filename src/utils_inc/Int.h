@@ -1,34 +1,37 @@
 #ifndef KRYPTO_INT_H
 #define KRYPTO_INT_H
+#include <stdexcept>
+
 typedef long long LL;
+
+using namespace std;
+
+tuple<LL, LL, LL> extended_gcd(LL a, LL b);
 
 struct Int {
 private:
     LL value;
-    static LL mod;
-    Int inverse() const;
+    LL mod;
 
 public:
     Int();
-    Int(LL val);
+    Int(LL val, LL modulo);
 
-    operator LL() const;
-
-    static void set_mod(LL modulo);
-    static LL get_mod();
-
+    Int inverse() const;
+    LL get_mod() const;
     Int pow(LL exp) const;
 
+    operator LL() const;
+    Int operator-() const;
     Int operator+(const Int& rhs) const;
-
     Int operator-(const Int& rhs) const;
-
     Int operator*(const Int& rhs) const;
-
-    void operator*=(const Int& rhs);
-
     Int operator/(const Int& rhs) const;
-
+    void operator+=(const Int& rhs);
+    void operator-=(const Int& rhs);
+    void operator*=(const Int& rhs);
+    void operator/=(const Int& rhs);
     bool operator==(const Int& rhs) const;
+    bool operator!=(const Int& rhs) const;
 };
 #endif //KRYPTO_INT_H
