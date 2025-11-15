@@ -59,7 +59,7 @@ TEST(int_div_test, throws_on_non_invertible) {
     LL p = 12;
     Int a(5, p);
     Int b(3, p);
-    ASSERT_THROW(a / b, std::runtime_error);
+    ASSERT_THROW(a / b, runtime_error);
 }
 
 TEST(int_equality_test, are_equal) {

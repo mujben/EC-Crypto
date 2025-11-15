@@ -2,7 +2,10 @@
 #include "Int.h"
 #include <tuple>
 
-std::tuple<LL, LL, LL> extended_gcd(const LL a, const LL b) {
+#define MOD_CHECK(op) if (this->mod != rhs.mod) \
+{ throw std::runtime_error("Modulus mismatch in Int::operator" #op); }
+
+tuple<LL, LL, LL> extended_gcd(const LL a, const LL b) {
     if (a == 0)
         return {b, 0, 1};
     auto [g, x1, y1] = extended_gcd(b % a, a);
@@ -13,7 +16,7 @@ Int::Int() : value(0), mod(1) {};
 
 Int::Int(LL val, LL modulo) {
     if (modulo <= 0) {
-        if (modulo == 0) throw std::runtime_error("Modulus cannot be 0");
+        if (modulo == 0) throw runtime_error("Modulus cannot be 0");
         this->mod = modulo;
     } else {
         this->mod = modulo;
@@ -25,13 +28,9 @@ Int Int::inverse() const {
     if (mod == 1) return Int(0, 1);
     auto [g, x, y] = extended_gcd(this->value, this->mod);
     if (g != 1) {
-        throw std::runtime_error("Modular inverse does not exist");
+        throw runtime_error("Modular inverse does not exist");
     }
     return Int((x % mod + mod) % mod, this->mod);
-}
-
-Int::operator LL() const {
-    return value;
 }
 
 LL Int::get_mod() const {
@@ -56,12 +55,13 @@ Int Int::pow(LL exp) const {
     return result;
 }
 
+Int::operator LL() const {
+    return value;
+}
+
 Int Int::operator-() const {
     return Int(-this->value, this->mod);
 }
-
-#define MOD_CHECK(op) if (this->mod != rhs.mod) \
-{ throw std::runtime_error("Modulus mismatch in Int::operator" #op); }
 
 Int Int::operator+(const Int& rhs) const {
     MOD_CHECK(+);
@@ -110,4 +110,3 @@ bool Int::operator==(const Int& rhs) const {
 bool Int::operator!=(const Int& rhs) const {
     return !(*this == rhs);
 }
-

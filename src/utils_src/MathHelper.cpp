@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 LL random_LL(const LL min, const LL max) {
     random_device rd;
     mt19937 gen(rd());

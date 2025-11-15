@@ -14,6 +14,29 @@ LL find_order(const EC &curve) {
     return order;
 }
 
+Point pick_random_point(const EC &curve) {
+    const LL mod = curve.p;
+    LL value = mod % 4;
+    while (true) {
+        Int x(random_LL(0, mod - 1), mod);
+        Int y_sq = x.pow(3) + curve.a * x + curve.b;
+        Int euler_cryterium = y_sq.pow(LL((mod - 1) / 2));
+        if (euler_cryterium == 1) {
+            if (value == 3) {
+                Int y = y_sq.pow(LL((mod + 1) / 4));
+                return {x, y, false, curve};
+            }
+            if (value == 1) {
+                Int y = find_root_mod(y_sq);
+                return {x, y, false, curve};
+            }
+        }
+        else if (euler_cryterium == 0) {
+            return {x, Int(0, mod), false, curve};
+        }
+    }
+}
+
 Int find_root_mod(const Int value) {
     const LL mod = value.get_mod();
     if (value == 0) return Int(0, mod);
@@ -56,27 +79,4 @@ Int find_root_mod(const Int value) {
         R = R * b;
     }
     return R;
-}
-
-Point pick_random_point(const EC &curve) {
-    const LL mod = curve.p;
-    LL value = mod % 4;
-    while (true) {
-        Int x(random_LL(0, mod - 1), mod);
-        Int y_sq = x.pow(3) + curve.a * x + curve.b;
-        Int euler_cryterium = y_sq.pow(LL((mod - 1) / 2));
-        if (euler_cryterium == 1) {
-            if (value == 3) {
-                Int y = y_sq.pow(LL((mod + 1) / 4));
-                return {x, y, false, curve};
-            }
-            if (value == 1) {
-                Int y = find_root_mod(y_sq);
-                return {x, y, false, curve};
-            }
-        }
-        else if (euler_cryterium == 0) {
-            return {x, Int(0, mod), false, curve};
-        }
-    }
 }

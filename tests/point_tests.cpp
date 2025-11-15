@@ -7,7 +7,7 @@ TEST(point_add_tests, lhs_is_inf) {
     Point A(Int(2, p), Int(3, p), false, curve);
     Point B(curve);
     Point res = A;
-    ASSERT_EQ(res, A + B);
+    ASSERT_TRUE(res == A + B);
 }
 
 TEST(point_add_tests, rhs_is_inf) {
@@ -16,7 +16,7 @@ TEST(point_add_tests, rhs_is_inf) {
     Point A(curve);
     Point B(Int(2, p), Int(3, p), false, curve);
     Point res = B;
-    ASSERT_EQ(res, A + B);
+    ASSERT_TRUE(res == A + B);
 }
 
 TEST(point_add_tests, add_inverse) {
@@ -25,7 +25,7 @@ TEST(point_add_tests, add_inverse) {
     Point A(Int(3, p), Int(6, p), false, curve);
     Point B(Int(3, p), Int(91, p), false, curve);
     Point res(curve);
-    ASSERT_EQ(res, A + B);
+    ASSERT_TRUE(res == A + B);
 }
 
 TEST(point_add_tests, point_doubling) {
@@ -34,7 +34,7 @@ TEST(point_add_tests, point_doubling) {
     Point A(Int(3, p), Int(6, p), false, curve);
     Point B(Int(3, p), Int(6, p), false, curve);
     Point res(Int(80, p), Int(10, p), false, curve);
-    ASSERT_EQ(res, A + B);
+    ASSERT_TRUE(res == A + B);
 }
 
 TEST(point_add_tests, point_addition) {
@@ -43,7 +43,7 @@ TEST(point_add_tests, point_addition) {
     Point A(Int(3, p), Int(6, p), false, curve);
     Point B(Int(80, p), Int(10, p), false, curve);
     Point res(Int(80, p), Int(87, p), false, curve);
-    ASSERT_EQ(res, A + B);
+    ASSERT_TRUE(res == A + B);
 }
 
 TEST(point_mult_tests, mult_by_zero) {
@@ -51,7 +51,7 @@ TEST(point_mult_tests, mult_by_zero) {
     EC curve(2, 3, p);
     Point A(Int(3, p), Int(6, p), false, curve);
     Point res(curve);
-    ASSERT_EQ(res, (LL)0 * A);
+    ASSERT_TRUE(res == (LL)0 * A);
 }
 
 TEST(point_mult_tests, mult_by_one) {
@@ -59,7 +59,7 @@ TEST(point_mult_tests, mult_by_one) {
     EC curve(2, 3, p);
     Point A(Int(3, p), Int(6, p), false, curve);
     Point res = A;
-    ASSERT_EQ(res, (LL)1 * A);
+    ASSERT_TRUE(res == (LL)1 * A);
 }
 
 TEST(point_mult_tests, mult_by_two) {
@@ -67,7 +67,7 @@ TEST(point_mult_tests, mult_by_two) {
     EC curve(2, 3, p);
     Point A(Int(3, p), Int(6, p), false, curve);
     Point res(Int(80, p), Int(10, p), false, curve);
-    ASSERT_EQ(res, (LL)2 * A);
+    ASSERT_TRUE(res == (LL)2 * A);
 }
 
 TEST(point_mult_tests, mult_by_three) {
@@ -75,7 +75,7 @@ TEST(point_mult_tests, mult_by_three) {
     EC curve(2, 3, p);
     Point A(Int(3, p), Int(6, p), false, curve);
     Point res(Int(80, p), Int(87, p), false, curve);
-    ASSERT_EQ(res, (LL)3 * A);
+    ASSERT_TRUE(res == (LL)3 * A);
 }
 
 TEST(point_mult_tests, mult_inf_point) {
@@ -83,7 +83,7 @@ TEST(point_mult_tests, mult_inf_point) {
     EC curve(2, 3, p);
     Point A(curve);
     Point res(curve);
-    ASSERT_EQ(res, (LL)3 * A);
+    ASSERT_TRUE(res == (LL)3 * A);
 }
 
 TEST(point_ops_tests, equality_operator) {
@@ -104,7 +104,7 @@ TEST(point_ops_tests, operator_plus_equals) {
     Point B(Int(80, p), Int(10, p), false, curve);
     Point res(Int(80, p), Int(87, p), false, curve);
     A += B;
-    ASSERT_EQ(res, A);
+    ASSERT_TRUE(res == A);
 }
 
 TEST(point_ops_tests, curve_mismatch_exception) {
@@ -115,5 +115,5 @@ TEST(point_ops_tests, curve_mismatch_exception) {
     EC curve2(5, 6, p);
     Point B(Int(1, p), Int(1, p), false, curve2);
 
-    ASSERT_THROW(A + B, std::runtime_error);
+    ASSERT_THROW(A + B, runtime_error);
 }

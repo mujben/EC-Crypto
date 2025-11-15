@@ -5,46 +5,66 @@
 #include "Point.h"
 #include "ECHelper.h"
 
-bool operator==(const Point& lhs, const Point& rhs) {
-    return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.inf == rhs.inf && lhs.curve == rhs.curve);
+#define CURVE_CHECK(op) if (this->curve != rhs.curve) \
+{ throw runtime_error("Curve mismatch in Point::operator" #op); }
+
+Point::Point(const EC& curve) : x((0), curve.p), y((0), curve.p), inf(true), curve(curve) {};
+
+Point::Point(Int x, Int y, bool inf, const EC& curve) : x(x), y(y), inf(inf), curve(curve) {};
+
+Point& Point::operator=(const Point& rhs) {
+    CURVE_CHECK(=);
+    if (this == &rhs) return *this;
+    this->x = rhs.x;
+    this->y = rhs.y;
+    this->inf = rhs.inf;
+    return *this;
 }
 
-Point operator+(const Point& lhs, const Point& rhs) {
-    if (lhs.curve != rhs.curve) throw std::runtime_error("Curve mismatch");
-    const EC& curve = lhs.curve;
-
-    if (lhs.inf == true) return rhs;
-    if (rhs.inf == true) return lhs;
-
-    const LL p = lhs.curve.p;
-
-    if (lhs.x == rhs.x && lhs.y + rhs.y == Int(0, p))
-        return {lhs.curve};
-
-    Int alpha;
-    if (lhs == rhs)
-        alpha = (Int(3, p) * lhs.x * lhs.x + lhs.curve.a) / (Int(2, p) * lhs.y);
-    else
-        alpha = (rhs.y - lhs.y) / (rhs.x - lhs.x);
-
-    Int res_x = alpha * alpha - lhs.x - rhs.x;
-    return {res_x, alpha * (lhs.x - res_x) - lhs.y, false, lhs.curve};
-}
-
-void operator+=(Point& lhs, const Point& rhs) {
-    Point res = lhs + rhs;
-    lhs.x = res.x;
-    lhs.y = res.y;
-    lhs.inf = res.inf;
-}
 Point Point::operator-() const {
     return {this->x, -this->y, this->inf, this->curve};
 }
 
-Point operator*(const LL& scalar, const Point& point) {
+Point Point::operator+(const Point& rhs) {
+    CURVE_CHECK(+);
 
+    if (this->inf == true) return rhs;
+    if (rhs.inf == true) return *this;
+
+    const LL p = this->curve.p;
+
+    if (this->x == rhs.x && this->y + rhs.y == Int(0, p))
+        return {this->curve};
+
+    Int alpha;
+    if (*this == rhs)
+        alpha = (Int(3, p) * this->x * this->x + this->curve.a) / (Int(2, p) * this->y);
+    else
+        alpha = (rhs.y - this->y) / (rhs.x - this->x);
+
+    Int res_x = alpha * alpha - this->x - rhs.x;
+    return {res_x, alpha * (this->x - res_x) - this->y, false, this->curve};
+}
+
+void Point::operator+=(const Point& rhs) {
+    CURVE_CHECK(+=);
+    Point res = *this + rhs;
+    this->x = res.x;
+    this->y = res.y;
+    this->inf = res.inf;
+}
+
+bool Point::operator==(const Point& rhs) {
+    return (this->x == rhs.x && this->y == rhs.y && this->inf == rhs.inf && this->curve == rhs.curve);
+}
+
+bool Point::operator!=(const Point& rhs) {
+    return !(*this == rhs);
+}
+
+Point operator*(const LL& scalar, const Point& point) {
     if (point.inf == true) {
-        return Point(point.curve);
+        return {point.curve};
     }
 
     LL k = scalar;
@@ -68,7 +88,7 @@ Point operator*(const LL& scalar, const Point& point) {
     return res;
 }
 
-Point find_generator(const EC &curve, const std::array<LL, 2> &order) {
+Point find_generator(const EC &curve, const array<LL, 2> &order) {
     const LL h = order[0];
     while (true){
         Point P = pick_random_point(curve);

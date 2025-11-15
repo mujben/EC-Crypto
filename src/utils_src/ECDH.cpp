@@ -14,7 +14,7 @@ Point ECDH::get_public_key() const {
 
 Point ECDH::calculate_shared_secret(const Point& other_public_key) const {
     if (this->curve != other_public_key.curve) {
-        throw std::runtime_error("Curve mismatch in ECDH secret calculation");
+        throw runtime_error("Curve mismatch in ECDH secret calculation");
     }
     return this->private_key * other_public_key;
 }

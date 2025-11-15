@@ -12,8 +12,8 @@ Point ECDSA::get_public_key() const {
     return this->public_key;
 }
 
-Signature ECDSA::sign(const std::string& message) const {
-    std::hash<std::string> hash_fn;
+Signature ECDSA::sign(const string& message) const {
+    hash<string> hash_fn;
     LL z_val = hash_fn(message);
 
     Int z(z_val, this->n);
@@ -38,8 +38,8 @@ Signature ECDSA::sign(const std::string& message) const {
     return Signature{r, s};
 }
 
-bool ECDSA::verify(const std::string& message, const Signature& sig, const Point& public_key, const EC& curve, const Point& G, LL n) {
-    std::hash<std::string> hash_fn;
+bool ECDSA::verify(const string& message, const Signature& sig, const Point& public_key, const EC& curve, const Point& G, LL n) {
+    hash<string> hash_fn;
     LL z_val = hash_fn(message);
     Int z(z_val, n);
 

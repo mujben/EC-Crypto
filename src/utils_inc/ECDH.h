@@ -11,11 +11,11 @@ private:
     const EC& curve;
     const Point& G;
     LL n;
+
 public:
     ECDH(const EC& curve, const Point& G, LL n);
 
     Point get_public_key() const;
-
     Point calculate_shared_secret(const Point& other_public_key) const;
 };
 

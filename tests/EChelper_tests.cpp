@@ -17,37 +17,34 @@ TEST(finding_square_root, test0) {
 class curve_points_tests : public testing::Test {
 protected:
     LL p;
-    EC* curve;
+    EC curve;
     vector<Point> points;
     void SetUp() override {
         p = 7;
 
-        curve = new EC(1, 0, p);
+        curve = EC(1, 0, p);
 
-        points = vector<Point>{
-            Point(*curve),
-            Point(Int(0, p), Int(0, p), false, *curve),
-            Point(Int(1, p), Int(3, p), false, *curve),
-            Point(Int(1, p), Int(4, p), false, *curve),
-            Point(Int(3, p), Int(3, p), false, *curve),
-            Point(Int(3, p), Int(4, p), false, *curve),
-            Point(Int(5, p), Int(2, p), false, *curve),
-            Point(Int(5, p), Int(5, p), false, *curve)
+        points = vector<Point> {
+            curve,
+            {{0, p}, {0, p}, false, curve},
+            {{1, p}, {3, p}, false, curve},
+            {{1, p}, {4, p}, false, curve},
+            {{3, p}, {3, p}, false, curve},
+            {{3, p}, {4, p}, false, curve},
+            {{5, p}, {2, p}, false, curve},
+            {{5, p}, {5, p}, false, curve}
         };
-    }
-    void TearDown() override {
-        delete curve;
     }
 };
 
 TEST_F(curve_points_tests, random_point_is_valid) {
     for (int i = 0; i < 100; i++) {
-        Point A = pick_random_point(*curve);
+        Point A = pick_random_point(curve);
         bool found = (find(points.begin(), points.end(), A) != points.end());
         EXPECT_TRUE(found);
     }
 }
 
 TEST_F(curve_points_tests, find_order_is_valid) {
-    ASSERT_EQ(find_order(*curve), points.size());
+    ASSERT_EQ(find_order(curve), points.size());
 }
