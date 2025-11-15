@@ -20,6 +20,16 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "BUILD_SRC": "ON"
       }
+    },
+    {
+      "name": "ConfigABE",
+      "displayName": "Debug Build",
+      "generator": "MinGW Makefiles",
+      "binaryDir": "${sourceDir}/build/debug/ABE",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_ABE": "ON"
+      }
     }
   ],
   "buildPresets": [
@@ -30,6 +40,10 @@
     {
       "name": "BuildSrc",
       "configurePreset": "ConfigSrc"
+    },
+    {
+      "name": "BuildABE",
+      "configurePreset": "ConfigABE"
     }
   ],
   "testPresets": [

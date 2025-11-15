@@ -2,6 +2,10 @@
 #include "MathHelper.h"
 #include <functional>
 
+Signature::operator string() const {
+    return to_string(r) + " " + to_string(s);
+}
+
 ECDSA::ECDSA(const EC& curve, const Point& G, LL n)
     : p(curve.p), n(n), curve(curve), G(G), public_key(curve) {
     this->private_key = random_LL(1, n-1);

@@ -11,6 +11,7 @@ struct Point {
 
     Point(const EC& curve);
     Point(Int x, Int y, bool inf, const EC& curve);
+    Point(const string& xy, const EC& curve);
 
     Point& operator=(const Point& rhs);
     Point operator-() const;
@@ -18,6 +19,8 @@ struct Point {
     void operator+=(const Point& rhs);
     bool operator==(const Point& rhs);
     bool operator!=(const Point& rhs);
+
+    operator string() const;
 };
 
 Point operator*(const LL& scalar, const Point& point);

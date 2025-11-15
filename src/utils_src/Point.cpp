@@ -1,5 +1,6 @@
 #include <array>
 #include <stdexcept>
+#include <sstream>
 #include "Int.h"
 #include "EC.h"
 #include "Point.h"
@@ -11,6 +12,14 @@
 Point::Point(const EC& curve) : x((0), curve.p), y((0), curve.p), inf(true), curve(curve) {};
 
 Point::Point(Int x, Int y, bool inf, const EC& curve) : x(x), y(y), inf(inf), curve(curve) {};
+
+Point::Point(const string& xy, const EC& curve) : inf(false), curve(curve) {
+    LL a, b;
+    istringstream iss(xy);
+    iss >> a >> b;
+
+    x = Int(a, curve.p), y = Int(b, curve.p);
+}
 
 Point& Point::operator=(const Point& rhs) {
     CURVE_CHECK(=);
@@ -60,6 +69,10 @@ bool Point::operator==(const Point& rhs) {
 
 bool Point::operator!=(const Point& rhs) {
     return !(*this == rhs);
+}
+
+Point::operator string() const {
+    return to_string(x) + " " + to_string(y);
 }
 
 Point operator*(const LL& scalar, const Point& point) {
