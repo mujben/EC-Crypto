@@ -9,6 +9,8 @@ using namespace std;
 struct Signature {
     Int r;
     Int s;
+
+    operator string() const;
 };
 
 class ECDSA {
