@@ -56,3 +56,23 @@ The function outputs $R$ as result of $R^2 = value$. The second result is $-R$ (
 - **pick_random_point(EC)**
 
 Return random point on a curve by picking random $x$ and searching for its corresponding $y$ value.
+
+## ECDH
+
+- **get_public_key()**
+
+Return public key, which is exual to $\text{private_key} \times G$, private_key is a random value in range `[1, n - 1]`.
+
+- **calculate_shared_secret(other_public_key)**
+
+Calculate the shared secret value by multiplying values of private_key and other_public_key.
+
+## ECDSA
+
+- **sign(message)**
+
+Generates a digital signature {r, s} for the given message. It calculates $r = (k \times G).x \pmod n$ and $s = k^{-1}(z + r \times d_A) \pmod n$, where $z$ is a hash of the message, $k$ is a random nonce in range `[1, n - 1]`, and $d_A$ is the private key. Returns a Signature struct.
+
+- **verify(message, sig, public_key, curve, G, n, p)**
+
+Verifies if the signature sig is valid for the message and public_key. It computes $u_1 = z \times s^{-1} \pmod n$, and $u_2 = r \times s^{-1} \pmod n$. It then calculates the point $P = u_1 \times G + u_2 \times \text{public_key}$ (using mod p arithmetic). The signature is valid if $P.x \pmod n == r$. Returns true or false.

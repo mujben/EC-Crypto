@@ -1,6 +1,7 @@
 #include "ECDSA.h"
 #include "MathHelper.h"
 #include <functional>
+#include "sodium.h"
 
 Signature::operator string() const {
     return to_string(r) + " " + to_string(s);
@@ -17,8 +18,10 @@ Point ECDSA::get_public_key() const {
 }
 
 Signature ECDSA::sign(const string& message) const {
-    hash<string> hash_fn;
-    LL z_val = hash_fn(message);
+    unsigned char hash[crypto_hash_sha256_BYTES];
+    crypto_hash_sha256(hash, (const unsigned char*)message.c_str(), message.length());
+
+    LL z_val = *((LL*)hash);
 
     Int z(z_val, this->n);
 
@@ -43,8 +46,10 @@ Signature ECDSA::sign(const string& message) const {
 }
 
 bool ECDSA::verify(const string& message, const Signature& sig, const Point& public_key, const EC& curve, const Point& G, LL n) {
-    hash<string> hash_fn;
-    LL z_val = hash_fn(message);
+    unsigned char hash[crypto_hash_sha256_BYTES];
+    crypto_hash_sha256(hash, (const unsigned char*)message.c_str(), message.length());
+
+    LL z_val = *((LL*)hash);
     Int z(z_val, n);
 
     Int r = sig.r;

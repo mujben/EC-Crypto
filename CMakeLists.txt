@@ -19,6 +19,7 @@ add_library(krypto_lib ${UTILS_SRC})
 target_include_directories(krypto_lib PUBLIC
         "${PROJECT_SOURCE_DIR}/src/utils_inc"
 )
+target_link_libraries(krypto_lib PUBLIC sodium)
 
 option(BUILD_TESTS OFF)
 option(BUILD_SRC OFF)
