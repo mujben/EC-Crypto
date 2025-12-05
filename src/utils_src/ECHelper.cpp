@@ -22,7 +22,7 @@ LL find_order_bsgs(const EC &curve) {
     //baby steps giant steps algorithm
     //O(p^1/4)
     const LL p = curve.p;
-    const LL s = ceil(std::pow(p, 1/4));
+    const LL s = ceil(std::pow(p, 0.25));
 
     LL i, j = 0;
     bool found = false;
