@@ -7,26 +7,26 @@ Perform Miller-Rabin primality test executed in `iterations` iterations (by defa
 
 - **factor($|E(F_p)|$)**
 
-Factorize and order of a elliptic curve and output an array `{h, n}` with small `h` determined\
-by `MAX_COFACTOR`. If `h` is too large return `{0, 0}`
+Factorizes an order of an elliptic curve and outputs an array `{h, n}` with small cofactor `h` determined
+by `MAX_COFACTOR`. If `h` is too large, returns `{0, 0}`.
 
 - **is_residue(value)**
 
-Calculates the Legrende symbol of `value` using Euler's criterion $value^{(p-1)/2}\pmod p$.
+Calculates the Legendre symbol of `value` using Euler's criterion $value^{(p-1)/2}\pmod p$.
 Output determines if `value` has a square root:
 1. Returns `1` if `value` is a quadratic residue - it has two roots
 2. Returns `0` if `value` is 0 - it has one root equal 0.
 3. Returns `-1` if `value` is quadratic nonresidue.
 
 ## Point
-Arithmetics on points of a elliptic curve.
+Arithmetic on elliptic curve points.
 - **addition (operator+)**
 
-Adding two points of a elliptic curve according to standard formulas.
+The addition of two points on an elliptic curve follows the standard formulas.
 
 - **multiplication (operator\*)**
 
-We used double and add algorithm for faster computations.
+Uses double and add algorithm for faster computations.
 
 - **find_generator(curve, {h, n})**
 
@@ -44,9 +44,14 @@ Binary exponentiation for faster computations.
 
 - **find_order(EC)**
 
-Brute force every possible `x` coordinate of a elliptic curve and then check if given `x` is a square residue.
+Brute force every possible `x` coordinate of an elliptic curve and then check if given `x` is a quadratic residue.
 If it is (meaning the output of `is_residue(x)` is 1) it adds 2 points to the counter, otherwise if `is_residue(x)` outputs 0
 it adds 1 point to the counter and in other case, the point is not a part of a curve.
+
+- **find_order_bsgs(EC)**
+
+Shanks's baby-step-giant-step strategy of evaluating the number of points of an elliptic curve
+
 
 - **find_root_mod(value)**
 

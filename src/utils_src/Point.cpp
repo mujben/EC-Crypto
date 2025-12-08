@@ -63,11 +63,11 @@ void Point::operator+=(const Point& rhs) {
     this->inf = res.inf;
 }
 
-bool Point::operator==(const Point& rhs) {
+bool Point::operator==(const Point& rhs) const {
     return (this->x == rhs.x && this->y == rhs.y && this->inf == rhs.inf && this->curve == rhs.curve);
 }
 
-bool Point::operator!=(const Point& rhs) {
+bool Point::operator!=(const Point& rhs) const {
     return !(*this == rhs);
 }
 

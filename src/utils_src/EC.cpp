@@ -1,5 +1,6 @@
 #include <random>
 #include "Int.h"
+#include "MathHelper.h"
 #include "EC.h"
 
 void EC::init_random(LL modulo) {
@@ -16,19 +17,21 @@ void EC::init_random(LL modulo) {
         a = Int(dis(gen), p);
         b = Int(dis(gen), p);
         delta = Int(4, p) * a * a * a + Int(27, p) * b * b;
-    } while (delta == 0);
+    } while (delta == Int(0, p));
 }
 
 EC::EC(LL a_val, LL b_val, LL modulo)
     : a(a_val, modulo), b(b_val, modulo), p(modulo)
 {
+    if (!is_prime(p)) throw runtime_error("Invalid modulus: p must be a prime number.");
     Int delta = Int(4, p) * a * a * a + Int(27, p) * b * b;
-    if (delta == (0, p)) {
+    if (delta == Int(0, p)) {
         throw runtime_error("Invalid curve (delta is zero)");
     }
 }
 
 EC::EC(const LL modulo) {
+    if (!is_prime(modulo)) throw runtime_error("Invalid modulus: p must be a prime number.");
     init_random(modulo);
 }
 
