@@ -29,4 +29,4 @@ cd src
 - [Methods for computing the number of points of an elliptic curve](https://jtnb.centre-mersenne.org/article/JTNB_1995__7_1_219_0.pdf)
 - [Tonelli-Shanks algorithm for computing square root of a number](https://en.wikipedia.org/wiki/Tonelli%E2%80%93Shanks_algorithm)
 - [Lagrange's theorem](https://en.wikipedia.org/wiki/Lagrange%27s_theorem_(group_theory))
-- AGH lectures: "Algebra", "Selected Topic in Advanced Mathematics", "Cryptography"
+- AGH lectures: "Algebra" (dr. Lech Adamus), "Selected Topic in Advanced Mathematics", "Cryptography"
