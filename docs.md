@@ -61,7 +61,7 @@ Return random point on a curve by picking random $x$ and searching for its corre
 
 - **get_public_key()**
 
-Return public key, which is exual to $\text{private_key} \times G$, private_key is a random value in range `[1, n - 1]`.
+Return public key, which is exual to $\text{privateKey} \times G$, private_key is a random value in range `[1, n - 1]`.
 
 - **calculate_shared_secret(other_public_key)**
 
@@ -75,4 +75,4 @@ Generates a digital signature {r, s} for the given message. It calculates $r = (
 
 - **verify(message, sig, public_key, curve, G, n, p)**
 
-Verifies if the signature sig is valid for the message and public_key. It computes $u1 = z \times s^{-1} \pmod n$, and $u_2 = r \times s^{-1} \pmod n$. It then calculates the point $P = u1 \times G + u_2 \times \text{public_key}$ (using mod p arithmetic). The signature is valid if $P.x \pmod n == r$. Returns true or false.
+Verifies if the signature sig is valid for the message and public_key. It computes $u1 = z \times s^{-1} \pmod n$, and $u_2 = r \times s^{-1} \pmod n$. It then calculates the point $P = u1 \times G + u2 \times \text{publicKey}$ (using mod p arithmetic). The signature is valid if $P.x \pmod n == r$. Returns true or false.
