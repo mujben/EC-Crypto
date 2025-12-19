@@ -12,7 +12,7 @@
 using namespace std;
 
 int main() {
-    const LL p = 2965048609; //32-bit prime number
+    const LL p = 4611686018427387847;//2965048609; //32-bit prime number
     EC curve(p);
     LL curve_order = 0;
     array<LL, 2> factored{};
@@ -20,6 +20,7 @@ int main() {
     int tries = 1;
     chrono::steady_clock::time_point curve_begin = chrono::steady_clock::now();
     while (factored[0] == 0) {
+        cout << "\r" << tries << flush;
         curve = EC(p);
         curve_order = find_order_bsgs(curve);
         factored = factor(curve_order);

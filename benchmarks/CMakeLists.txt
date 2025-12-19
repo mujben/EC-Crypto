@@ -1,0 +1,2 @@
+add_executable(benchmarks EfficiencySimulation.cpp)
+target_link_libraries(benchmarks krypto_lib)

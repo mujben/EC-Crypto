@@ -23,13 +23,13 @@ LL find_order_bsgs(const EC &curve) {
     //O(p^1/4)
     const LL p = curve.p;
     const LL s = ceil(std::pow(p, 0.25));
-
     LL i, j = 0;
-    bool found = false;
 
-    do{
+    while (true) {
         const Point P = pick_random_point(curve);
         const auto ZERO = Point(curve);
+
+        if (P.inf == true) continue;
 
         std::unordered_map<Point, LL> points_hashmap;
         Point P_current = P;
@@ -45,27 +45,45 @@ LL find_order_bsgs(const EC &curve) {
         //giant steps: repeatedly add and subtract the point Q to compute R, R +- Q, ..., R +- tQ
         Point Q = (2 * s + 1) * P;
         Point R = (p + 1) * P;
-        const LL t = static_cast<LL> (2 * ceil(std::sqrt(p)) / (2 * s + 1));
 
+        //current points to optimize giant steps
+        Point Q_neg = -Q;
+        Point curr_pos = R; // R + 0*Q
+        Point curr_neg = R; // R - 0*Q
+
+        const LL t = static_cast<LL> (ceil(2 * std::sqrt(p) / (2 * s + 1)));
+        bool candidate_found = false;
         for (i = 0; i <= t; i++) {
-            Point res_pos = R + i * Q;
-            if (points_hashmap.contains(res_pos)) {
-                j = points_hashmap.at(res_pos);
-                found = true;
+            if (points_hashmap.contains(curr_pos)) {
+                j = points_hashmap.at(curr_pos);
+                candidate_found = true;
                 break;
             }
-            Point res_neg = R + (-i * Q);
-            if (points_hashmap.contains(res_neg)) {
-                j = points_hashmap.at(res_neg);
+            if (points_hashmap.contains(curr_neg)) {
+                j = points_hashmap.at(curr_neg);
                 i = -i;
-                found = true;
+                candidate_found = true;
                 break;
             }
+            curr_pos += Q;
+            curr_neg += Q_neg;
         }
-    }while (!found);
+        //check if in fact m is a true order of a curve
+        if (candidate_found) {
+            const LL m = p + 1 + (2 * s + 1) * i - j;
 
-    const LL m = p + 1 + (2 * s + 1) * i - j;
-    return m;
+            bool order_found = true;
+            for (int v = 0; v < 10; v++) {
+                Point Check = pick_random_point(curve);
+                if (Check.inf == true) continue;
+                if ((m * Check).inf != true) {
+                    order_found = false;
+                    break;
+                }
+            }
+            if (order_found) return m;
+        }
+    }
 }
 
 Point pick_random_point(const EC &curve) {

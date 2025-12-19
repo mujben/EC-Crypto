@@ -75,7 +75,16 @@ Int Int::operator-(const Int& rhs) const {
 
 Int Int::operator*(const Int& rhs) const {
     MOD_CHECK(*);
-    return Int(this->value * rhs.value, this->mod);
+    // return Int(this->value * rhs.value, this->mod);
+    Int res(0, this->mod);
+    LL b = rhs.value;
+    LL a = this->value;
+    while (b > 0) {
+        if (b & 1) res.value = (res.value + a) % this->mod;
+        a = (a << 1) % this->mod;
+        b >>= 1;
+    }
+    return res;
 }
 
 Int Int::operator/(const Int& rhs) const {

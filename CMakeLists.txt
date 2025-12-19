@@ -24,6 +24,7 @@ target_link_libraries(krypto_lib PUBLIC sodium)
 option(BUILD_TESTS OFF)
 option(BUILD_SRC OFF)
 option(BUILD_ABE OFF)
+option(BUILD_BENCH OFF)
 
 if (BUILD_SRC)
     add_subdirectory(src)
@@ -35,4 +36,8 @@ endif()
 
 if (BUILD_ABE)
     add_subdirectory(AliceBobEve)
+endif()
+
+if (BUILD_BENCH)
+    add_subdirectory(benchmarks)
 endif()
